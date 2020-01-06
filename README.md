@@ -1,5 +1,5 @@
 # Battleship
-#### Devin Lin and Tyler Huang Pd. 5
+#### Devin Lin, Tyler Huang, and Jason Zheng Pd. 5
 
 # Proposal
 
