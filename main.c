@@ -2,8 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-char * row,col = calloc(5, 5);
-int board[10][10], player1Hit[10][10], player2Hit[10][10], boardSize = 10, numSubmarines = 10, numHits = 10;
+int board[10][10], player1Hits[10][10], player2Hits[10][10], boardSize = 10, numSubmarines = 10, numHits = 10;
 
 void clearScreen() { //clears screen
   system("@cls||clear");
@@ -15,9 +14,9 @@ void clearBoard() { //clears the board
   {
     for (col = 0; col < boardSize; col++)
     {
-      board[line][col] = 0;
-      player1Hits[line][col] = 0;
-      player2Hits[line][col] = 0;
+      board[row][col] = 0;
+      player1Hits[row][col] = 0;
+      player2Hits[row][col] = 0;
     }
   }
 }
@@ -51,8 +50,16 @@ void display() { //shows board and submarines
     }
     printf("\n");
   }
+  printf("\nPress enter to start the game...");
+  int enter = 0;
+  while (enter != '\r' && enter != '\n') {
+    fgets("%d",enter,stdin);
+  }
 }
 
 int main() {
+  clearScreen();
+  setSubmarines();
+  display();
   return 0;
 }
