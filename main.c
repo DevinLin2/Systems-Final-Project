@@ -30,10 +30,8 @@ void setSubmarines(player) { //takes user input as coords and places a submarine
       char * col;
       printf("Enter a coordinate (row column) for submarine %d: ", i+1);
       fgets(input,SIZE,stdin);
-      row = inputr;
-      printf("Enter a col (0-9) for submarine %d: ", i+1);
-      fgets(inputc,SIZE,stdin);
-      col = inputc;
+      row = input;
+      col = input;
       //printf("ROW: %d\n", r);
       board[atoi(row)][atoi(col)] = 1;
     }
