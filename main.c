@@ -130,6 +130,17 @@ void showPlayerHits(player) { //shows the players' hits on the boards
   char missedHit[] = "x";
   char empty[] = "_";
   printf("\nPlayer %d has made the following shots: \n\n", player);
+  int row,col,i;
+  for (row = 0; row < boardSize; row++) {
+    if (row == 0) {
+      for (i = 0; i <= boardSize; i++) {
+        if (i == 0) printf("   ")
+        else printf(" %d ", i - 1);
+      }
+      printf("\n\n");
+    }
+    for (col = 0; col < boardSize; col++) {
+      if (col == 0) printf("%d  ", row);
 }
 
 int main() {
