@@ -25,9 +25,9 @@ void setSubmarines() { //takes user input as coords and places a submarine there
   int i;
   for (i = 0; i < numSubmarines; i++) {
     int row, col;
-    printf("Enter the line of submarine %i (0-9): ", i);
+    printf("Enter a row (0-9) of submarine %i: ", i);
     fgets("%d", &row, stdin);
-    printf("Enter the column of submarine %i (0-9): ", i);
+    printf("Enter a column (0-9) of submarine %i: ", i);
     fgets("%d", &col, stdin);
     board[row][col] = 1;
   }
@@ -57,9 +57,44 @@ void display() { //shows board and submarines
   }
 }
 
+void setPlayerHits(player) { //records players' attempts
+  printf("\nWelcome player %d, you have %i tries to find %i submarines, good luck!\n", player, numHits, numSubmarines);
+  int i;
+  switch (player) {
+  case 1:
+    for (i = 0; i < numHits; i++) {
+      int row, col;
+      printf("Enter a row (0-9) for submarine %d: ", i);
+      fgets(" %d", row, stdin);
+      printf("Enter a column (0-9) for submarine %d: ", i);
+      fgets(" %d", col, stdin);
+      player1Hits[row][col] = 1;
+    }
+    break;
+  case 2:
+    for (i = 0; i < numHits; i++) {
+      int row, col;
+      printf("Enter a row (0-9) for submarine %d: ", i);
+      fgets(" %d", row, stdin);
+      printf("Enter a column (0-9) for submarine %d: ", i);
+      fgets(" %d", col, stdin);
+      player2Hits[row][col] = 1;
+    }
+    break;
+  default:
+    break;
+  }
+}
+
+void checkShots(player) { //checks to see if a player sunk a ship
+
+}
+
 int main() {
-  clearScreen();
+  clearMap();
   setSubmarines();
   display();
+  clearScreen();
+  setPlayerHits(2)
   return 0;
 }
