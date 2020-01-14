@@ -124,6 +124,14 @@ void checkHits(player) { //checks to see if a player sunk a ship
   printf("\nPlayer %d has missed %d shots\n", player, missed);
 }
 
+void showPlayerHits(player) { //shows the players' hits on the boards
+  char submarine[] = "s";
+  char submarineSunk[] = "d";
+  char missedHit[] = "x";
+  char empty[] = "_";
+  printf("\nPlayer %d has made the following shots: \n\n", player);
+}
+
 int main() {
   clearMap();
   setSubmarines();
