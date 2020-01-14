@@ -134,7 +134,7 @@ void showPlayerHits(player) { //shows the players' hits on the boards
   for (row = 0; row < boardSize; row++) {
     if (row == 0) {
       for (i = 0; i <= boardSize; i++) {
-        if (i == 0) printf("   ")
+        if (i == 0) printf("   ");
         else printf(" %d ", i - 1);
       }
       printf("\n\n");
@@ -143,27 +143,27 @@ void showPlayerHits(player) { //shows the players' hits on the boards
       if (col == 0) printf("%d  ", row);
       switch (player) {
       case 1:
-        if (player1Hits[row][col] == 1 && map[row][col] == 1) {
+        if (player1Hits[row][col] == 1 && board[row][col] == 1) {
           printf(" %s ", submarineSunk);
         }
-        else if (player1Hits[row][col] == 1 && map[row][col] == 0) {
+        else if (player1Hits[row][col] == 1 && board[row][col] == 0) {
           printf(" %s ", missedHit);
         }
-        else if (player1Hits[row][col] == 0 && map[row][col] == 1) {
-          printf(" %s ", submarines);
+        else if (player1Hits[row][col] == 0 && board[row][col] == 1) {
+          printf(" %s ", submarine);
         }
         else {
           printf(" %s ", empty);
         }
         break;
       case 2:
-        if (player2Hits[row][col] == 1 && map[row][col] == 1) {
+        if (player2Hits[row][col] == 1 && board[row][col] == 1) {
           printf(" %s ", submarineSunk);
         }
-        else if (player2Hits[row][col] == 1 && map[row][col] == 0) {
+        else if (player2Hits[row][col] == 1 && board[row][col] == 0) {
           printf(" %s ", missedHit);
         }
-        else if (player2Hits[row][col] == 0 && map[row][col] == 1) {
+        else if (player2Hits[row][col] == 0 && board[row][col] == 1) {
           printf(" %s ", submarine);
         }
         else
@@ -181,7 +181,7 @@ void showPlayerHits(player) { //shows the players' hits on the boards
 }
 
 int main() {
-  clearMap();
+  clearBoard();
   setSubmarines();
   display();
   clearScreen();
