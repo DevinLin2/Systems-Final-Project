@@ -27,7 +27,7 @@ void setSubmarines() { //takes user input as coords and places a submarine there
     int row, col;
     printf("Enter a row (0-9) of submarine %i: ", i);
     fgets("%d", &row, stdin);
-    printf("Enter a column (0-9) of submarine %i: ", i);
+    printf("Enter a col (0-9) of submarine %i: ", i);
     fgets("%d", &col, stdin);
     board[row][col] = 1;
   }
@@ -66,7 +66,7 @@ void setPlayerHits(player) { //records players' attempts
       int row, col;
       printf("Enter a row (0-9) for submarine %d: ", i);
       fgets(" %d", row, stdin);
-      printf("Enter a column (0-9) for submarine %d: ", i);
+      printf("Enter a col (0-9) for submarine %d: ", i);
       fgets(" %d", col, stdin);
       player1Hits[row][col] = 1;
     }
@@ -76,7 +76,7 @@ void setPlayerHits(player) { //records players' attempts
       int row, col;
       printf("Enter a row (0-9) for submarine %d: ", i);
       fgets(" %d", row, stdin);
-      printf("Enter a column (0-9) for submarine %d: ", i);
+      printf("Enter a col (0-9) for submarine %d: ", i);
       fgets(" %d", col, stdin);
       player2Hits[row][col] = 1;
     }
@@ -95,11 +95,11 @@ void checkHits(player) { //checks to see if a player sunk a ship
       switch (player) {
       case 1:
         if (board[row][col] == 1 && player1Hits[row][col] == 1) {
-          printf("\nPlayer %d sunk the submarine at row %d, column %d", player, row, col);
+          printf("\nPlayer %d sunk the submarine at row %d, col %d", player, row, col);
           hits++;
         }
         else if (board[row][col] == 0 && player1Hits[row][col] == 1) {
-          printf("\nPlayer %d hit nothing at row %d, column %d", player, row, col);
+          printf("\nPlayer %d hit nothing at row %d, col %d", player, row, col);
           missed++;
         }
         {
@@ -107,11 +107,11 @@ void checkHits(player) { //checks to see if a player sunk a ship
         break;
       case 2:
         if (board[row][col] == 1 && player2Hits[row][col] == 1) {
-          printf("\nPlayer %d sunk the submarine at row %d, column %i", player, row, column);
+          printf("\nPlayer %d sunk the submarine at row %d, col %i", player, row, col);
           hits++;
         }
         else if (board[row][col] == 0 && player2Hits[row][col] == 1) {
-          printf("\nPlayer %d hit nothing at row %d, column %d", player, row, col);
+          printf("\nPlayer %d hit nothing at row %d, col %d", player, row, col);
           missed++;
         }
         break;
@@ -141,6 +141,43 @@ void showPlayerHits(player) { //shows the players' hits on the boards
     }
     for (col = 0; col < boardSize; col++) {
       if (col == 0) printf("%d  ", row);
+      switch (player) {
+      case 1:
+        if (player1Hits[row][col] == 1 && map[row][col] == 1) {
+          printf(" %s ", submarineSunk);
+        }
+        else if (player1Hits[row][col] == 1 && map[row][col] == 0) {
+          printf(" %s ", missedHit);
+        }
+        else if (player1Hits[row][col] == 0 && map[row][col] == 1) {
+          printf(" %s ", submarines);
+        }
+        else {
+          printf(" %s ", empty);
+        }
+        break;
+      case 2:
+        if (player2Hits[row][col] == 1 && map[row][col] == 1) {
+          printf(" %s ", submarineSunk);
+        }
+        else if (player2Hits[row][col] == 1 && map[row][col] == 0) {
+          printf(" %s ", missedHit);
+        }
+        else if (player2Hits[row][col] == 0 && map[row][col] == 1) {
+          printf(" %s ", submarine);
+        }
+        else
+        {
+          printf(" %s ", empty);
+        }
+        break;
+      default:
+        break;
+      }
+    }
+    printf("\n");
+  }
+  printf("\nKey:  d: submarines sunk; s: submarines; x: empty cell;\n");
 }
 
 int main() {
@@ -149,6 +186,7 @@ int main() {
   display();
   clearScreen();
   setPlayerHits(2);
+  showPlayerHits(2);
   checkHits(2);
   return 0;
 }
