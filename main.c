@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#define SIZE 512
+
 int board[10][10], player1Hits[10][10], player2Hits[10][10], boardSize = 10, numSubmarines = 10, numHits = 10;
 
 void clearScreen() { //clears screen
@@ -24,12 +26,17 @@ void clearBoard() { //clears the board
 void setSubmarines() { //takes user input as coords and places a submarine there on the board
   int i;
   for (i = 0; i < numSubmarines; i++) {
-    int row, col;
+    char inputr[SIZE], inputc[SIZE];
+    char * row;
+    char * col;
     printf("Enter a row (0-9) of submarine %i: ", i);
-    fgets("%d", &row, stdin);
+    fgets(inputr,SIZE,stdin);
+    row = inputr;
     printf("Enter a col (0-9) of submarine %i: ", i);
-    fgets("%d", &col, stdin);
-    board[row][col] = 1;
+    fgets(inputc,SIZE,stdin);
+    col = inputc;
+    //printf("ROW: %d\n", r);
+    board[atoi(row)][atoi(col)] = 1;
   }
 }
 
@@ -53,7 +60,7 @@ void display() { //shows board and submarines
   printf("\nPress enter to start the game...");
   int enter = 0;
   while (enter != '\r' && enter != '\n') {
-    fgets("%d",enter,stdin);
+    fgets(&enter,25,stdin);
   }
 }
 
@@ -65,9 +72,9 @@ void setPlayerHits(player) { //records players' attempts
     for (i = 0; i < numHits; i++) {
       int row, col;
       printf("Enter a row (0-9) for submarine %d: ", i);
-      fgets(" %d", row, stdin);
+      fgets(&row,25,stdin);
       printf("Enter a col (0-9) for submarine %d: ", i);
-      fgets(" %d", col, stdin);
+      fgets(&col,25,stdin);
       player1Hits[row][col] = 1;
     }
     break;
@@ -75,9 +82,9 @@ void setPlayerHits(player) { //records players' attempts
     for (i = 0; i < numHits; i++) {
       int row, col;
       printf("Enter a row (0-9) for submarine %d: ", i);
-      fgets(" %d", row, stdin);
+      fgets(&row,25,stdin);
       printf("Enter a col (0-9) for submarine %d: ", i);
-      fgets(" %d", col, stdin);
+      fgets(&col,25,stdin);
       player2Hits[row][col] = 1;
     }
     break;
@@ -184,9 +191,9 @@ int main() {
   clearBoard();
   setSubmarines();
   display();
-  clearScreen();
-  setPlayerHits(2);
-  showPlayerHits(2);
-  checkHits(2);
+  //clearScreen();
+  //setPlayerHits(2);
+  //showPlayerHits(2);
+  //checkHits(2);
   return 0;
 }
