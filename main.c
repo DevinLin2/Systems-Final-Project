@@ -12,10 +12,8 @@ void clearScreen() { //clears screen
 
 void clearBoard() { //clears the board
   int row,col;
-  for (row = 0; row < boardSize; row++)
-  {
-    for (col = 0; col < boardSize; col++)
-    {
+  for (row = 0; row < boardSize; row++) {
+    for (col = 0; col < boardSize; col++) {
       board[row][col] = 0;
       player1Hits[row][col] = 0;
       player2Hits[row][col] = 0;
@@ -29,10 +27,10 @@ void setSubmarines() { //takes user input as coords and places a submarine there
     char inputr[SIZE], inputc[SIZE];
     char * row;
     char * col;
-    printf("Enter a row (0-9) of submarine %i: ", i);
+    printf("Enter a row (0-9) of submarine %d: ", i);
     fgets(inputr,SIZE,stdin);
     row = inputr;
-    printf("Enter a col (0-9) of submarine %i: ", i);
+    printf("Enter a col (0-9) of submarine %d: ", i);
     fgets(inputc,SIZE,stdin);
     col = inputc;
     //printf("ROW: %d\n", r);
@@ -58,34 +56,43 @@ void display() { //shows board and submarines
     printf("\n");
   }
   printf("\nPress enter to start the game...");
-  int enter = 0;
+  int enter;
   while (enter != '\r' && enter != '\n') {
-    fgets(&enter,25,stdin);
+    enter = getchar();
+    //printf("%d\n", enter);
   }
 }
 
 void setPlayerHits(player) { //records players' attempts
-  printf("\nWelcome player %d, you have %i tries to find %i submarines, good luck!\n", player, numHits, numSubmarines);
+  printf("\nWelcome player %d, you have %d tries to find %d submarines, good luck!\n", player, numHits, numSubmarines);
   int i;
   switch (player) {
   case 1:
     for (i = 0; i < numHits; i++) {
-      int row, col;
+      char inputr[SIZE], inputc[SIZE];
+      char * row;
+      char * col;
       printf("Enter a row (0-9) for submarine %d: ", i);
-      fgets(&row,25,stdin);
+      fgets(inputr,SIZE,stdin);
+      row = inputr;
       printf("Enter a col (0-9) for submarine %d: ", i);
-      fgets(&col,25,stdin);
-      player1Hits[row][col] = 1;
+      fgets(inputc,SIZE,stdin);
+      col = inputc;
+      player1Hits[atoi(row)][atoi(col)] = 1;
     }
     break;
   case 2:
     for (i = 0; i < numHits; i++) {
-      int row, col;
+      char inputr[SIZE], inputc[SIZE];
+      char * row;
+      char * col;
       printf("Enter a row (0-9) for submarine %d: ", i);
-      fgets(&row,25,stdin);
+      fgets(inputr,SIZE,stdin);
+      row = inputr;
       printf("Enter a col (0-9) for submarine %d: ", i);
-      fgets(&col,25,stdin);
-      player2Hits[row][col] = 1;
+      fgets(inputc,SIZE,stdin);
+      col = inputc;
+      player2Hits[atoi(row)][atoi(col)] = 1;
     }
     break;
   default:
@@ -191,9 +198,9 @@ int main() {
   clearBoard();
   setSubmarines();
   display();
-  //clearScreen();
-  //setPlayerHits(2);
-  //showPlayerHits(2);
-  //checkHits(2);
+  clearScreen();
+  setPlayerHits(2);
+  showPlayerHits(2);
+  checkHits(2);
   return 0;
 }
