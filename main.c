@@ -39,7 +39,13 @@ void setSubmarines(player) { //takes user input as coords and places a submarine
       //row = input;
       //col = input;
       //printf("ROW: %d\n", r);
-      board[atoi(row)][atoi(col)] = 1;
+      if (atoi(row) <= 9 && atoi(row) >= 0 && atoi(col) <= 9 && atoi(col) >= 0){
+        board[atoi(row)][atoi(col)] = 1;
+      }
+      else {
+        printf("Bad Input Try Again\n");
+        i--;
+      }
     }
 }
 
