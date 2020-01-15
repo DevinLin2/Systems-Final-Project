@@ -39,7 +39,9 @@ void setSubmarines(player) { //takes user input as coords and places a submarine
       //row = input;
       //col = input;
       //printf("ROW: %d\n", r);
-      if (atoi(row) <= 9 && atoi(row) >= 0 && atoi(col) <= 9 && atoi(col) >= 0){
+      if (atoi(row) <= 9 && atoi(row) >= 0
+       && atoi(col) <= 9 && atoi(col) >= 0
+       && board[atoi(row)][atoi(col)] == 0){
         board[atoi(row)][atoi(col)] = 1;
       }
       else {
@@ -86,7 +88,15 @@ void setPlayerHits(player) { //records players' attempts
       fgets(input,SIZE,stdin);
       row = strtok(input, " ");
       col = strtok(NULL, " ");
-      player1Hits[atoi(row)][atoi(col)] = 1;
+      if (atoi(row) <= 9 && atoi(row) >= 0
+       && atoi(col) <= 9 && atoi(col) >= 0
+       && player1Hits[atoi(row)][atoi(col)] == 0){
+        player1Hits[atoi(row)][atoi(col)] = 1;
+      }
+      else {
+        printf("Bad Input Try Again\n");
+        i--;
+      }
     }
     break;
   case 2:
@@ -97,7 +107,15 @@ void setPlayerHits(player) { //records players' attempts
       fgets(input,SIZE,stdin);
       row = strtok(input, " ");
       col = strtok(NULL, " ");
-      player2Hits[atoi(row)][atoi(col)] = 1;
+      if (atoi(row) <= 9 && atoi(row) >= 0
+       && atoi(col) <= 9 && atoi(col) >= 0
+       && player2Hits[atoi(row)][atoi(col)] == 0){
+        player2Hits[atoi(row)][atoi(col)] = 1;
+      }
+      else {
+        printf("Bad Input Try Again\n");
+        i--;
+      }
     }
     break;
   default:
