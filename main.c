@@ -29,10 +29,11 @@ void setSubmarines(player) { //takes user input as coords and places a submarine
       char * row, * col;
       printf("Enter a coordinate (row column)(0-9) for submarine %d: ", i+1);
       fgets(input,SIZE,stdin);
-      //printf("%s\n", input);
+      //printf("%c\n", input[0]);
+      //printf("%d\n", strcmp(&input[0], "") );
       row = strtok(input, " ");
       col = strtok(NULL, " ");
-      printf("%s\n", col);
+      //printf("%s\n", col);
       //printf("%d\n", atoi(row));
       //printf("%d\n", atoi(col));
       //row = input;
