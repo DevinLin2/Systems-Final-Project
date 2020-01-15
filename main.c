@@ -26,12 +26,17 @@ void setSubmarines(player) { //takes user input as coords and places a submarine
   printf("Welcome player %d, you have %d submarines to place on the board, have fun!\n", player, numSubmarines);
     for (i = 0; i < numSubmarines; i++) {
       char input[SIZE];
-      char * row;
-      char * col;
-      printf("Enter a coordinate (row column) for submarine %d: ", i+1);
+      char * row, * col;
+      printf("Enter a coordinate (row column)(0-9) for submarine %d: ", i+1);
       fgets(input,SIZE,stdin);
-      row = input;
-      col = input;
+      //printf("%s\n", input);
+      row = strtok(input, " ");
+      col = strtok(NULL, " ");
+      printf("%s\n", col);
+      //printf("%d\n", atoi(row));
+      //printf("%d\n", atoi(col));
+      //row = input;
+      //col = input;
       //printf("ROW: %d\n", r);
       board[atoi(row)][atoi(col)] = 1;
     }
@@ -68,29 +73,23 @@ void setPlayerHits(player) { //records players' attempts
   switch (player) {
   case 1:
     for (i = 0; i < numHits; i++) {
-      char inputr[SIZE], inputc[SIZE];
-      char * row;
-      char * col;
-      printf("Enter a row (0-9) for submarine %d: ", i+1);
-      fgets(inputr,SIZE,stdin);
-      row = inputr;
-      printf("Enter a col (0-9) for submarine %d: ", i+1);
-      fgets(inputc,SIZE,stdin);
-      col = inputc;
+      char input[SIZE];
+      char * row, * col;
+      printf("Enter a coordinate (row column)(0-9) for submarine %d: ", i+1);
+      fgets(input,SIZE,stdin);
+      row = strtok(input, " ");
+      col = strtok(NULL, " ");
       player1Hits[atoi(row)][atoi(col)] = 1;
     }
     break;
   case 2:
     for (i = 0; i < numHits; i++) {
-      char inputr[SIZE], inputc[SIZE];
-      char * row;
-      char * col;
-      printf("Enter a row (0-9) for submarine %d: ", i);
-      fgets(inputr,SIZE,stdin);
-      row = inputr;
-      printf("Enter a col (0-9) for submarine %d: ", i);
-      fgets(inputc,SIZE,stdin);
-      col = inputc;
+      char input[SIZE];
+      char * row, * col;
+      printf("Enter a coordinate (row column)(0-9) for submarine %d: ", i+1);
+      fgets(input,SIZE,stdin);
+      row = strtok(input, " ");
+      col = strtok(NULL, " ");
       player2Hits[atoi(row)][atoi(col)] = 1;
     }
     break;
@@ -114,8 +113,6 @@ void checkHits(player) { //checks to see if a player sunk a ship
         else if (board[row][col] == 0 && player1Hits[row][col] == 1) {
           printf("\nPlayer %d hit nothing at row %d, col %d", player, row, col);
           missed++;
-        }
-        {
         }
         break;
       case 2:
