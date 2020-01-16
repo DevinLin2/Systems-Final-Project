@@ -39,14 +39,17 @@ void setSubmarines(player) { //takes user input as coords and places a submarine
       //row = input;
       //col = input;
       //printf("ROW: %d\n", r);
-      if (atoi(row) <= 9 && atoi(row) >= 0
-       && atoi(col) <= 9 && atoi(col) >= 0
-       && board[atoi(row)][atoi(col)] == 0){
-        board[atoi(row)][atoi(col)] = 1;
+      if (atoi(row) > 9 || atoi(row) < 0
+       || atoi(col) > 9 || atoi(col) < 0) {
+        printf("Enter A Number 0 Through 9 Inclusive\n");
+        i--;
+      }
+      else if (board[atoi(row)][atoi(col)] == 1){
+        printf("Already Chose This Coordinate\n");
+        i--;
       }
       else {
-        printf("Bad Input Try Again\n");
-        i--;
+        board[atoi(row)][atoi(col)] = 1;
       }
     }
 }
@@ -88,14 +91,17 @@ void setPlayerHits(player) { //records players' attempts
       fgets(input,SIZE,stdin);
       row = strtok(input, " ");
       col = strtok(NULL, " ");
-      if (atoi(row) <= 9 && atoi(row) >= 0
-       && atoi(col) <= 9 && atoi(col) >= 0
-       && player1Hits[atoi(row)][atoi(col)] == 0){
-        player1Hits[atoi(row)][atoi(col)] = 1;
+      if (atoi(row) > 9 || atoi(row) < 0
+       || atoi(col) > 9 || atoi(col) < 0) {
+        printf("Enter A Number 0 Through 9 Inclusive\n");
+        i--;
+      }
+      else if (player1Hits[atoi(row)][atoi(col)] == 1){
+        printf("Already Chose This Coordinate\n");
+        i--;
       }
       else {
-        printf("Bad Input Try Again\n");
-        i--;
+        player1Hits[atoi(row)][atoi(col)] = 1;
       }
     }
     break;
@@ -107,14 +113,17 @@ void setPlayerHits(player) { //records players' attempts
       fgets(input,SIZE,stdin);
       row = strtok(input, " ");
       col = strtok(NULL, " ");
-      if (atoi(row) <= 9 && atoi(row) >= 0
-       && atoi(col) <= 9 && atoi(col) >= 0
-       && player2Hits[atoi(row)][atoi(col)] == 0){
-        player2Hits[atoi(row)][atoi(col)] = 1;
+      if (atoi(row) > 9 || atoi(row) < 0
+       || atoi(col) > 9 || atoi(col) < 0) {
+        printf("Enter A Number 0 Through 9 Inclusive\n");
+        i--;
+      }
+      else if (player2Hits[atoi(row)][atoi(col)] == 1){
+        printf("Already Chose This Coordinate\n");
+        i--;
       }
       else {
-        printf("Bad Input Try Again\n");
-        i--;
+        player2Hits[atoi(row)][atoi(col)] = 1;
       }
     }
     break;
