@@ -1,29 +1,30 @@
 # Battleship
 #### Devin Lin, Tyler Huang, and Jason Zheng Pd. 5
 
-# Proposal
+# A broad description
+A two player battleship game ran on one computer. The board is saved in memory and each player will have a chance to sick as many ships as possible in 10 tries.
 
-#### Description
-A two player battleship game ran on one computer.
+# Required libraries
+None
 
-#### Usage
-1. User will run the program with an executable
-2. Player 1 will start with placing all his ships by entering coordinates in the form of [row column] (without the brackets).
-3. Player 2 will then be able to guess the locations of the ships in the form of [row column] (without the brackets).
-4. Once player 2 finishes, player 2 will be able to place ships and player 1 will be able to guess.
-5. At the end, a winner is shown.
+# How to use
+1. Clone this repo using https:
+  ```sh
+  $ https://github.com/VitaminOh/MKS65-Final.git
+  ```
+2. Run make
+  ```sh
+  $ make
+  ```
+3. Run make run
+  ```sh
+  $ make run
+  ```
+4. Player 1 will start by placing all his ships by entering coordinates in the form of [row column] (without the brackets).
+5. Player 2 will then be able to guess the locations of the ships in the form of [row column] (without the brackets).
+6. Once player 2 finishes, player 2 will be able to place ships and player 1 will be able to guess.
+7. At the end, a winner is shown based on the number of ships each player sunk.
 
-#### Technical Design
-- We will be parsing command line arguments, using pointers, and dynamically allocating memory.
-- Command line arguments will be used to play this game, which will be used to determine valid moves.
-- Devin and Jason will work on networking, while Tyler will handling coding the game, such as parsing args, checking if a move is valid.
-
-#### Timeline
-- 1/8 -- have basic game and UI working on one computer
-- 1/12 -- network functionality should be completed and a simple connection between two computers should be functioning
-- 1/15 -- game and networking should be linked and completed. User should be able to play the game seamlessly. DEBUGGING TIME.
-
-#### Bugs
-- Coordinates must be in the form [row column] with integer inputs otherwise will result in an error
-- If no coordinate is supplied, an error will be thrown
-- If there is no space in the argument, an error will be thrown
+# While running
+Some bugs that were not addressed were:
+1. Lack of error handling for missing arguments or arguments in the wrong format
