@@ -39,7 +39,7 @@ int main() {
   if (checkHits(1) == checkHits(2)){
     printf("\nTIE!\n");
   }
-  else if (checkHits(1) > checkHits(2)){
+  else if (checkHits(1) < checkHits(2)){
     printf("\nPlayer 1 has won!\n");
   }
   else {
