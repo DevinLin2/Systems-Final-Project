@@ -263,7 +263,7 @@ void setPlayerHits(int player) { //records players' attempts
   }
 }
 
-void checkHits(int player) { //checks to see if a player sunk a ship
+int checkHits(int player) { //checks to see if a player sunk a ship
   int missed = 0;
   int hits = 0;
   int row,col;
@@ -273,10 +273,7 @@ void checkHits(int player) { //checks to see if a player sunk a ship
       case 1:
         if (board[row][col] == 1 && player1Hits[row][col] == 1) {
           //printf("\nPlayer %d sunk the ship at row %d, col %d", player, row, col);
-		  p1Hits++;
-		  printf("%d\n", p1Hits);
 		  hits++;
-		  printf("%d\n", hits);
         }
         else if (board[row][col] == 0 && player1Hits[row][col] == 1) {
           //printf("\nPlayer %d hit nothing at row %d, col %d", player, row, col);
@@ -285,7 +282,6 @@ void checkHits(int player) { //checks to see if a player sunk a ship
         break;
       case 2:
         if (board[row][col] == 1 && player2Hits[row][col] == 1) {
-          p2Hits++;
 		  hits++;
         }
         else if (board[row][col] == 0 && player2Hits[row][col] == 1) {
@@ -299,6 +295,7 @@ void checkHits(int player) { //checks to see if a player sunk a ship
   }
   printf("\nPlayer %d has sunk %d ships", player, hits);
   printf("\nPlayer %d has missed %d shots\n", player, missed);
+  return hits;
 }
 
 int getP1Hits(){

@@ -34,10 +34,10 @@ int main() {
       }
     }
   }
-  if (getP1Hits() == getP2Hits()){
+  if (checkHits(1) == checkHits(2)){
     printf("\nTIE!\n");
   }
-  else if (getP1Hits() > getP2Hits()){
+  else if (checkHits(1) > checkHits(2)){
     printf("\nPlayer 1 has has won!\n");
   }
   else {
