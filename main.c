@@ -21,11 +21,13 @@ int main() {
     if (i == 1) {
       setPlayerHits(2);
       showPlayerHits(2);
-      checkHits(2);
+	  printf("\nPlayer 2 has sunk %d ships", checkHits(2));
+	  printf("\nPlayer 2 has missed %d shots\n", 10 - checkHits(2));
     } else {
       setPlayerHits(1);
       showPlayerHits(1);
-      checkHits(1);
+      printf("\nPlayer 1 has sunk %d ships", checkHits(1));
+	  printf("\nPlayer 1 has missed %d shots\n", 10 - checkHits(1));
     }
     if (i == 1) {
       printf("\nPress enter for player 2's turn...");
@@ -38,10 +40,10 @@ int main() {
     printf("\nTIE!\n");
   }
   else if (checkHits(1) > checkHits(2)){
-    printf("\nPlayer 1 has has won!\n");
+    printf("\nPlayer 1 has won!\n");
   }
   else {
-    printf("\nPlayer 2 has has won!\n");
+    printf("\nPlayer 2 has won!\n");
   }
   printf("Game Finished\n");
   return 0;

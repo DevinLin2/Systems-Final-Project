@@ -293,8 +293,6 @@ int checkHits(int player) { //checks to see if a player sunk a ship
       }
     }
   }
-  printf("\nPlayer %d has sunk %d ships", player, hits);
-  printf("\nPlayer %d has missed %d shots\n", player, missed);
   return hits;
 }
 
