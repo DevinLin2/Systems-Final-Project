@@ -1,5 +1,5 @@
 # Battleship
-#### Devin Lin, Tyler Huang, and Jason Zheng Pd. 5
+#### Devin Lin (PD 5), Tyler Huang (PD 5), and Jason Zheng (PD 10)
 
 # A broad description
 A two player battleship game ran on one computer. The board is saved in memory and each player will have a chance to sick as many ships as possible in 10 tries.
