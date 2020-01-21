@@ -78,6 +78,7 @@ void setShips(player) { //takes user input as coords and places a ship there on 
       //printf("%d\n", strcmp(&input[0], "") );
       strcpy(row, coords[0]);
       strcpy(col, coords[1]);
+      free(coords);
       //printf("%s\n", col);
       //printf("%d\n", atoi(row));
       //printf("%d\n", atoi(col));
@@ -239,6 +240,7 @@ void setPlayerHits(player) { //records players' attempts
       fgets(input,SIZE,stdin);
       row = strtok(input, " ");
       col = strtok(NULL, " ");
+      free(coords); 
       if (atoi(row) > 9 || atoi(row) < 0
        || atoi(col) > 9 || atoi(col) < 0) {
         printf("Enter A Number 0 Through 9 Inclusive\n");
