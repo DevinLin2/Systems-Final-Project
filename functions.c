@@ -276,7 +276,7 @@ void checkHits(int player) { //checks to see if a player sunk a ship
 		  p1Hits++;
 		  printf("%d\n", p1Hits);
 		  hits++;
-		  printf("%d\n", hits)
+		  printf("%d\n", hits);
         }
         else if (board[row][col] == 0 && player1Hits[row][col] == 1) {
           //printf("\nPlayer %d hit nothing at row %d, col %d", player, row, col);
