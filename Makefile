@@ -17,4 +17,5 @@ run:
 	./battleship
 
 clean:
+	rm battleship
 	rm -rf *.o
