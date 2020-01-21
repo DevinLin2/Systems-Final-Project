@@ -1,249 +1,49 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
-#define SIZE 512
-
-int board[10][10], player1Hits[10][10], player2Hits[10][10], boardSize = 10, numSubmarines = 10, numHits = 10;
-
-void clearScreen() { //clears screen
-  system("clear");
-}
-
-void clearBoard() { //clears the board
-  int row,col;
-  for (row = 0; row < boardSize; row++) {
-    for (col = 0; col < boardSize; col++) {
-      board[row][col] = 0;
-      player1Hits[row][col] = 0;
-      player2Hits[row][col] = 0;
-    }
-  }
-}
-
-void setSubmarines(player) { //takes user input as coords and places a submarine there on the board
-  int i;
-  printf("Welcome player %d, you have %d submarines to place on the board, have fun!\n", player, numSubmarines);
-    for (i = 0; i < numSubmarines; i++) {
-      char input[SIZE];
-      char * row, * col;
-      printf("Enter a coordinate (row column)(0-9) for submarine %d: ", i+1);
-      fgets(input,SIZE,stdin);
-      //printf("%c\n", input[0]);
-      //printf("%d\n", strcmp(&input[0], "") );
-      row = strtok(input, " ");
-      col = strtok(NULL, " ");
-      //printf("%s\n", col);
-      //printf("%d\n", atoi(row));
-      //printf("%d\n", atoi(col));
-      //row = input;
-      //col = input;
-      //printf("ROW: %d\n", r);
-      if (atoi(row) > 9 || atoi(row) < 0
-       || atoi(col) > 9 || atoi(col) < 0) {
-        printf("Enter A Number 0 Through 9 Inclusive\n");
-        i--;
-      }
-      else if (board[atoi(row)][atoi(col)] == 1){
-        printf("Already Chose This Coordinate\n");
-        i--;
-      }
-      else {
-        board[atoi(row)][atoi(col)] = 1;
-      }
-    }
-}
-
-void display() { //shows board and submarines
-  printf("\nCurrent board and game status:\n");
-  int row,col,i;
-  for (row = 0; row < boardSize; row++) {
-    if (row == 0) {
-      for (i = 0; i <= boardSize; i++) {
-        if (i == 0) printf("   ");
-        else printf(" %d ", i - 1);
-      }
-      printf("\n\n");
-    }
-    for (col = 0; col < boardSize; col++) {
-      if (col == 0) printf("%d  ", row);
-      printf(" %d ", board[row][col]);
-    }
-    printf("\n");
-  }
-  printf("\nPress enter to start the game...");
-  int enter;
-  while (enter != '\r' && enter != '\n') {
-    enter = getchar();
-    //printf("%d\n", enter);
-  }
-}
-
-void setPlayerHits(player) { //records players' attempts
-  printf("Welcome player %d, you have %d tries to find %d submarines, good luck!\n", player, numHits, numSubmarines);
-  int i;
-  switch (player) {
-  case 1:
-    for (i = 0; i < numHits; i++) {
-      char input[SIZE];
-      char * row, * col;
-      printf("Enter a coordinate (row column)(0-9) for submarine %d: ", i+1);
-      fgets(input,SIZE,stdin);
-      row = strtok(input, " ");
-      col = strtok(NULL, " ");
-      if (atoi(row) > 9 || atoi(row) < 0
-       || atoi(col) > 9 || atoi(col) < 0) {
-        printf("Enter A Number 0 Through 9 Inclusive\n");
-        i--;
-      }
-      else if (player1Hits[atoi(row)][atoi(col)] == 1){
-        printf("Already Chose This Coordinate\n");
-        i--;
-      }
-      else {
-        player1Hits[atoi(row)][atoi(col)] = 1;
-      }
-    }
-    break;
-  case 2:
-    for (i = 0; i < numHits; i++) {
-      char input[SIZE];
-      char * row, * col;
-      printf("Enter a coordinate (row column)(0-9) for submarine %d: ", i+1);
-      fgets(input,SIZE,stdin);
-      row = strtok(input, " ");
-      col = strtok(NULL, " ");
-      if (atoi(row) > 9 || atoi(row) < 0
-       || atoi(col) > 9 || atoi(col) < 0) {
-        printf("Enter A Number 0 Through 9 Inclusive\n");
-        i--;
-      }
-      else if (player2Hits[atoi(row)][atoi(col)] == 1){
-        printf("Already Chose This Coordinate\n");
-        i--;
-      }
-      else {
-        player2Hits[atoi(row)][atoi(col)] = 1;
-      }
-    }
-    break;
-  default:
-    break;
-  }
-}
-
-void checkHits(player) { //checks to see if a player sunk a ship
-  int missed = 0;
-  int hits = 0;
-  int row,col;
-  for (row = 0; row < boardSize; row++) {
-    for (col = 0; col < boardSize; col++) {
-      switch (player) {
-      case 1:
-        if (board[row][col] == 1 && player1Hits[row][col] == 1) {
-          printf("\nPlayer %d sunk the submarine at row %d, col %d", player, row, col);
-          hits++;
-        }
-        else if (board[row][col] == 0 && player1Hits[row][col] == 1) {
-          printf("\nPlayer %d hit nothing at row %d, col %d", player, row, col);
-          missed++;
-        }
-        break;
-      case 2:
-        if (board[row][col] == 1 && player2Hits[row][col] == 1) {
-          printf("\nPlayer %d sunk the submarine at row %d, col %i", player, row, col);
-          hits++;
-        }
-        else if (board[row][col] == 0 && player2Hits[row][col] == 1) {
-          printf("\nPlayer %d hit nothing at row %d, col %d", player, row, col);
-          missed++;
-        }
-        break;
-      default:
-        break;
-      }
-    }
-  }
-  printf("\nPlayer %d has sunk %d ships", player, hits);
-  printf("\nPlayer %d has missed %d shots\n", player, missed);
-}
-
-void showPlayerHits(player) { //shows the players' hits on the boards
-  char submarine[] = "s";
-  char submarineSunk[] = "d";
-  char missedHit[] = "x";
-  char empty[] = "_";
-  printf("\nPlayer %d has made the following shots: \n\n", player);
-  int row,col,i;
-  for (row = 0; row < boardSize; row++) {
-    if (row == 0) {
-      for (i = 0; i <= boardSize; i++) {
-        if (i == 0) printf("   ");
-        else printf(" %d ", i - 1);
-      }
-      printf("\n\n");
-    }
-    for (col = 0; col < boardSize; col++) {
-      if (col == 0) printf("%d  ", row);
-      switch (player) {
-      case 1:
-        if (player1Hits[row][col] == 1 && board[row][col] == 1) {
-          printf(" %s ", submarineSunk);
-        }
-        else if (player1Hits[row][col] == 1 && board[row][col] == 0) {
-          printf(" %s ", missedHit);
-        }
-        else if (player1Hits[row][col] == 0 && board[row][col] == 1) {
-          printf(" %s ", submarine);
-        }
-        else {
-          printf(" %s ", empty);
-        }
-        break;
-      case 2:
-        if (player2Hits[row][col] == 1 && board[row][col] == 1) {
-          printf(" %s ", submarineSunk);
-        }
-        else if (player2Hits[row][col] == 1 && board[row][col] == 0) {
-          printf(" %s ", missedHit);
-        }
-        else if (player2Hits[row][col] == 0 && board[row][col] == 1) {
-          printf(" %s ", submarine);
-        }
-        else
-        {
-          printf(" %s ", empty);
-        }
-        break;
-      default:
-        break;
-      }
-    }
-    printf("\n");
-  }
-  printf("\nKey:  d: submarines sunk; s: submarines; x: empty cell;\n");
-}
+#include "functions.h"
 
 int main() {
-  int i,player;
+  clearScreen();
   int enter;
-  for (i = 0; i < 2; i++){
+  printf("\n\n\n\n\n\n\n\n\n\n\t\tWelcome to battleship. Please hit enter to begin.");
+  while (enter != '\r' && enter != '\n') {
+    enter = getchar();
+  }
+  int i,player;
+  enter = 0;
+  for (i = 1; i < 3; i++){
     clearScreen();
     clearBoard();
-    setSubmarines(i);
-    display();
+    setShips(i);
+    display(0);
     clearScreen();
-    if (i == 0) player = 2;
-    else player = 1;
-    setPlayerHits(player);
-    showPlayerHits(player);
-    checkHits(player);
-    if (i == 0) {
+    if (i == 1) {
+      setPlayerHits(2);
+      showPlayerHits(2);
+	  printf("\nPlayer 2 has sunk %d ships", checkHits(2));
+	  printf("\nPlayer 2 has missed %d shots\n", 10 - checkHits(2));
+    } else {
+      setPlayerHits(1);
+      showPlayerHits(1);
+      printf("\nPlayer 1 has sunk %d ships", checkHits(1));
+	  printf("\nPlayer 1 has missed %d shots\n", 10 - checkHits(1));
+    }
+    if (i == 1) {
       printf("\nPress enter for player 2's turn...");
       while (enter != '\r' && enter != '\n') {
         enter = getchar();
       }
     }
+  }
+  if (checkHits(1) == checkHits(2)){
+    printf("\nTIE!\n");
+  }
+  else if (checkHits(1) < checkHits(2)){
+    printf("\nPlayer 1 has won!\n");
+  }
+  else {
+    printf("\nPlayer 2 has won!\n");
   }
   printf("Game Finished\n");
   return 0;
