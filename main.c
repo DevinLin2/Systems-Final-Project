@@ -18,9 +18,15 @@ int main() {
     setShips(i);
     display(0);
     clearScreen();
-    setPlayerHits(i);
-    showPlayerHits(i);
-    checkHits(i);
+    if (i == 1) {
+      setPlayerHits(2);
+      showPlayerHits(2);
+      checkHits(2);
+    } else {
+      setPlayerHits(1);
+      showPlayerHits(1);
+      checkHits(1);
+    }
     if (i == 1) {
       printf("\nPress enter for player 2's turn...");
       while (enter != '\r' && enter != '\n') {
