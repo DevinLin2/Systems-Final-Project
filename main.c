@@ -10,6 +10,18 @@ void clearScreen() { //clears screen
   system("clear");
 }
 
+char ** parse(char *line, char *delimiter) { //parsing line
+	char * args = calloc(SIZE, 1);
+	strcpy(args, line);
+	char ** parsed = malloc(SIZE);
+	int i;
+	for (i = 0; args != NULL; i++) {
+		parsed[i] = strsep(&args, delimiter);
+  }
+	parsed[i] = NULL;
+	return parsed;
+}
+
 void clearBoard() { //clears the board
   int row,col;
   for (row = 0; row < boardSize; row++) {
@@ -55,14 +67,17 @@ void setShips(player) { //takes user input as coords and places a ship there on 
   int i;
   printf("Welcome player %d, you have %d ships to place on the board, have fun!\n", player, numships);
     for (i = 0; i < numships; i++) {
-      char input[SIZE];
-      char * row, * col;
+      char input[SIZE], row[SIZE], col[SIZE];
+      char ** coords;
       printf("Enter a coordinate (row column)(0-9) for ship %d: ", i+1);
       fgets(input,SIZE,stdin);
+      coords = parse(input, " ");
+      // printf("%s\n", coords[0]);
+      // printf("%s\n", coords[1]);
       //printf("%c\n", input[0]);
       //printf("%d\n", strcmp(&input[0], "") );
-      row = strtok(input, " ");
-      col = strtok(NULL, " ");
+      strcpy(row, coords[0]);
+      strcpy(col, coords[1]);
       //printf("%s\n", col);
       //printf("%d\n", atoi(row));
       //printf("%d\n", atoi(col));
@@ -194,12 +209,13 @@ void setPlayerHits(player) { //records players' attempts
   switch (player) {
   case 1:
     for (i = 0; i < numHits; i++) {
-      char input[SIZE];
-      char * row, * col;
+      char input[SIZE], row[SIZE], col[SIZE];
+      char ** coords;
       printf("Enter a coordinate (row column)(0-9) for ship %d: ", i+1);
       fgets(input,SIZE,stdin);
-      row = strtok(input, " ");
-      col = strtok(NULL, " ");
+      coords = parse(input, " ");
+      strcpy(row, coords[0]);
+      strcpy(col, coords[1]);
       if (atoi(row) > 9 || atoi(row) < 0
        || atoi(col) > 9 || atoi(col) < 0) {
         printf("Enter A Number 0 Through 9 Inclusive\n");
