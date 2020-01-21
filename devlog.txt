@@ -1,0 +1,21 @@
+Members: Tyler Huang, Devin Lin, Jason Zheng
+
+huangT -- 2020-1-06 9:13
+- started working on code
+- added couple functions to display board
+
+huangT -- 2020-1-08 17:09
+- added function to display ships
+
+huangT -- 2020-1-13 21:35
+- added function to display the board at the end of player's turn
+
+huangT -- 2020-1-14 17:49
+- added function to display the stats at the end of player's turn
+- working on player 2's turn
+
+huangT -- 2020-1-15 19:23
+- finished adding player 2's turn
+
+huangT -- 2020-1-20 20:52
+- working on making game look nicer to play 

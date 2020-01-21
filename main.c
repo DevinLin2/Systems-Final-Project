@@ -4,7 +4,7 @@
 
 #define SIZE 512
 
-int board[10][10], player1Hits[10][10], player2Hits[10][10], boardSize = 10, numSubmarines = 10, numHits = 10;
+int board[10][10], player1Hits[10][10], player2Hits[10][10], boardSize = 10, numships = 10, numHits = 10;
 
 void clearScreen() { //clears screen
   system("clear");
@@ -21,13 +21,43 @@ void clearBoard() { //clears the board
   }
 }
 
-void setSubmarines(player) { //takes user input as coords and places a submarine there on the board
+void display(status) { //shows board and ships
+  printf("\nCurrent board and game status:\n\n");
+  int row,col,i;
+  for (row = 0; row < boardSize; row++) {
+    if (row == 0) {
+      for (i = 0; i <= boardSize; i++) {
+        if (i == 0) printf("   ");
+        else printf(" %d ", i - 1);
+      }
+      printf("\n\n");
+    }
+    for (col = 0; col < boardSize; col++) {
+      if (col == 0) printf("%d  ", row);
+      printf(" %d ", board[row][col]);
+    }
+    printf("\n");
+  }
+  if (status == 0){
+    printf("\nPress enter to start the game...");
+    int enter;
+    while (enter != '\r' && enter != '\n') {
+      enter = getchar();
+      //printf("%d\n", enter);
+    }
+  }
+  else {
+    printf("\n");
+  }
+}
+
+void setShips(player) { //takes user input as coords and places a ship there on the board
   int i;
-  printf("Welcome player %d, you have %d submarines to place on the board, have fun!\n", player, numSubmarines);
-    for (i = 0; i < numSubmarines; i++) {
+  printf("Welcome player %d, you have %d ships to place on the board, have fun!\n", player, numships);
+    for (i = 0; i < numships; i++) {
       char input[SIZE];
       char * row, * col;
-      printf("Enter a coordinate (row column)(0-9) for submarine %d: ", i+1);
+      printf("Enter a coordinate (row column)(0-9) for ship %d: ", i+1);
       fgets(input,SIZE,stdin);
       //printf("%c\n", input[0]);
       //printf("%d\n", strcmp(&input[0], "") );
@@ -50,127 +80,14 @@ void setSubmarines(player) { //takes user input as coords and places a submarine
       }
       else {
         board[atoi(row)][atoi(col)] = 1;
+        display(1);
       }
     }
-}
-
-void display() { //shows board and submarines
-  printf("\nCurrent board and game status:\n");
-  int row,col,i;
-  for (row = 0; row < boardSize; row++) {
-    if (row == 0) {
-      for (i = 0; i <= boardSize; i++) {
-        if (i == 0) printf("   ");
-        else printf(" %d ", i - 1);
-      }
-      printf("\n\n");
-    }
-    for (col = 0; col < boardSize; col++) {
-      if (col == 0) printf("%d  ", row);
-      printf(" %d ", board[row][col]);
-    }
-    printf("\n");
-  }
-  printf("\nPress enter to start the game...");
-  int enter;
-  while (enter != '\r' && enter != '\n') {
-    enter = getchar();
-    //printf("%d\n", enter);
-  }
-}
-
-void setPlayerHits(player) { //records players' attempts
-  printf("Welcome player %d, you have %d tries to find %d submarines, good luck!\n", player, numHits, numSubmarines);
-  int i;
-  switch (player) {
-  case 1:
-    for (i = 0; i < numHits; i++) {
-      char input[SIZE];
-      char * row, * col;
-      printf("Enter a coordinate (row column)(0-9) for submarine %d: ", i+1);
-      fgets(input,SIZE,stdin);
-      row = strtok(input, " ");
-      col = strtok(NULL, " ");
-      if (atoi(row) > 9 || atoi(row) < 0
-       || atoi(col) > 9 || atoi(col) < 0) {
-        printf("Enter A Number 0 Through 9 Inclusive\n");
-        i--;
-      }
-      else if (player1Hits[atoi(row)][atoi(col)] == 1){
-        printf("Already Chose This Coordinate\n");
-        i--;
-      }
-      else {
-        player1Hits[atoi(row)][atoi(col)] = 1;
-      }
-    }
-    break;
-  case 2:
-    for (i = 0; i < numHits; i++) {
-      char input[SIZE];
-      char * row, * col;
-      printf("Enter a coordinate (row column)(0-9) for submarine %d: ", i+1);
-      fgets(input,SIZE,stdin);
-      row = strtok(input, " ");
-      col = strtok(NULL, " ");
-      if (atoi(row) > 9 || atoi(row) < 0
-       || atoi(col) > 9 || atoi(col) < 0) {
-        printf("Enter A Number 0 Through 9 Inclusive\n");
-        i--;
-      }
-      else if (player2Hits[atoi(row)][atoi(col)] == 1){
-        printf("Already Chose This Coordinate\n");
-        i--;
-      }
-      else {
-        player2Hits[atoi(row)][atoi(col)] = 1;
-      }
-    }
-    break;
-  default:
-    break;
-  }
-}
-
-void checkHits(player) { //checks to see if a player sunk a ship
-  int missed = 0;
-  int hits = 0;
-  int row,col;
-  for (row = 0; row < boardSize; row++) {
-    for (col = 0; col < boardSize; col++) {
-      switch (player) {
-      case 1:
-        if (board[row][col] == 1 && player1Hits[row][col] == 1) {
-          printf("\nPlayer %d sunk the submarine at row %d, col %d", player, row, col);
-          hits++;
-        }
-        else if (board[row][col] == 0 && player1Hits[row][col] == 1) {
-          printf("\nPlayer %d hit nothing at row %d, col %d", player, row, col);
-          missed++;
-        }
-        break;
-      case 2:
-        if (board[row][col] == 1 && player2Hits[row][col] == 1) {
-          printf("\nPlayer %d sunk the submarine at row %d, col %i", player, row, col);
-          hits++;
-        }
-        else if (board[row][col] == 0 && player2Hits[row][col] == 1) {
-          printf("\nPlayer %d hit nothing at row %d, col %d", player, row, col);
-          missed++;
-        }
-        break;
-      default:
-        break;
-      }
-    }
-  }
-  printf("\nPlayer %d has sunk %d ships", player, hits);
-  printf("\nPlayer %d has missed %d shots\n", player, missed);
 }
 
 void showPlayerHits(player) { //shows the players' hits on the boards
-  char submarine[] = "s";
-  char submarineSunk[] = "d";
+  char ship[] = "s";
+  char shipSunk[] = "d";
   char missedHit[] = "x";
   char empty[] = "_";
   printf("\nPlayer %d has made the following shots: \n\n", player);
@@ -188,13 +105,13 @@ void showPlayerHits(player) { //shows the players' hits on the boards
       switch (player) {
       case 1:
         if (player1Hits[row][col] == 1 && board[row][col] == 1) {
-          printf(" %s ", submarineSunk);
+          printf(" %s ", shipSunk);
         }
         else if (player1Hits[row][col] == 1 && board[row][col] == 0) {
           printf(" %s ", missedHit);
         }
         else if (player1Hits[row][col] == 0 && board[row][col] == 1) {
-          printf(" %s ", submarine);
+          printf(" %s ", ship);
         }
         else {
           printf(" %s ", empty);
@@ -202,13 +119,13 @@ void showPlayerHits(player) { //shows the players' hits on the boards
         break;
       case 2:
         if (player2Hits[row][col] == 1 && board[row][col] == 1) {
-          printf(" %s ", submarineSunk);
+          printf(" %s ", shipSunk);
         }
         else if (player2Hits[row][col] == 1 && board[row][col] == 0) {
           printf(" %s ", missedHit);
         }
         else if (player2Hits[row][col] == 0 && board[row][col] == 1) {
-          printf(" %s ", submarine);
+          printf(" %s ", ship);
         }
         else
         {
@@ -221,24 +138,160 @@ void showPlayerHits(player) { //shows the players' hits on the boards
     }
     printf("\n");
   }
-  printf("\nKey:  d: submarines sunk; s: submarines; x: empty cell;\n");
+  printf("\nKey:  d: ships sunk; s: ships; x: empty cell;\n");
+}
+
+void displayHits(player) { //shows a players hits
+  char shipSunk[] = "d";
+  char missedHit[] = "x";
+  printf("\nCurrent board and game status:\n\n");
+  int row,col,i;
+  for (row = 0; row < boardSize; row++) {
+    if (row == 0) {
+      for (i = 0; i <= boardSize; i++) {
+        if (i == 0) printf("   ");
+        else printf(" %d ", i - 1);
+      }
+      printf("\n\n");
+    }
+    for (col = 0; col < boardSize; col++) {
+      if (col == 0) printf("%d  ", row);
+      switch (player) {
+      case 1:
+        if (player1Hits[row][col] == 1 && board[row][col] == 1) {
+          printf(" %s ", shipSunk);
+        }
+        else if (player1Hits[row][col] == 1 && board[row][col] == 0) {
+          printf(" %s ", missedHit);
+        }
+        else {
+          printf(" %d ", 0);
+        }
+        break;
+      case 2:
+        if (player2Hits[row][col] == 1 && board[row][col] == 1) {
+          printf(" %s ", shipSunk);
+        }
+        else if (player2Hits[row][col] == 1 && board[row][col] == 0) {
+          printf(" %s ", missedHit);
+        }
+        else {
+          printf(" %d ", 0);
+        }
+        break;
+      default:
+        break;
+      }
+    }
+    printf("\n");
+  }
+  printf("\nKey:  d: ships sunk; s: ships; x: empty cell;\n");
+}
+
+void setPlayerHits(player) { //records players' attempts
+  printf("Welcome player %d, you have %d tries to find %d ships, good luck!\n", player, numHits, numships);
+  int i;
+  switch (player) {
+  case 1:
+    for (i = 0; i < numHits; i++) {
+      char input[SIZE];
+      char * row, * col;
+      printf("Enter a coordinate (row column)(0-9) for ship %d: ", i+1);
+      fgets(input,SIZE,stdin);
+      row = strtok(input, " ");
+      col = strtok(NULL, " ");
+      if (atoi(row) > 9 || atoi(row) < 0
+       || atoi(col) > 9 || atoi(col) < 0) {
+        printf("Enter A Number 0 Through 9 Inclusive\n");
+        i--;
+      }
+      else if (player1Hits[atoi(row)][atoi(col)] == 1){
+        printf("Already Chose This Coordinate\n");
+        i--;
+      }
+      else {
+        player1Hits[atoi(row)][atoi(col)] = 1;
+        displayHits(player);
+      }
+    }
+    break;
+  case 2:
+    for (i = 0; i < numHits; i++) {
+      char input[SIZE];
+      char * row, * col;
+      printf("Enter a coordinate (row column)(0-9) for ship %d: ", i+1);
+      fgets(input,SIZE,stdin);
+      row = strtok(input, " ");
+      col = strtok(NULL, " ");
+      if (atoi(row) > 9 || atoi(row) < 0
+       || atoi(col) > 9 || atoi(col) < 0) {
+        printf("Enter A Number 0 Through 9 Inclusive\n");
+        i--;
+      }
+      else if (player2Hits[atoi(row)][atoi(col)] == 1){
+        printf("Already Chose This Coordinate\n");
+        i--;
+      }
+      else {
+        player2Hits[atoi(row)][atoi(col)] = 1;
+        displayHits(player);
+      }
+    }
+    break;
+  default:
+    break;
+  }
+}
+
+void checkHits(player) { //checks to see if a player sunk a ship
+  int missed = 0;
+  int hits = 0;
+  int row,col;
+  for (row = 0; row < boardSize; row++) {
+    for (col = 0; col < boardSize; col++) {
+      switch (player) {
+      case 1:
+        if (board[row][col] == 1 && player1Hits[row][col] == 1) {
+          printf("\nPlayer %d sunk the ship at row %d, col %d", player, row, col);
+          hits++;
+        }
+        else if (board[row][col] == 0 && player1Hits[row][col] == 1) {
+          printf("\nPlayer %d hit nothing at row %d, col %d", player, row, col);
+          missed++;
+        }
+        break;
+      case 2:
+        if (board[row][col] == 1 && player2Hits[row][col] == 1) {
+          printf("\nPlayer %d sunk the ship at row %d, col %i", player, row, col);
+          hits++;
+        }
+        else if (board[row][col] == 0 && player2Hits[row][col] == 1) {
+          printf("\nPlayer %d hit nothing at row %d, col %d", player, row, col);
+          missed++;
+        }
+        break;
+      default:
+        break;
+      }
+    }
+  }
+  printf("\nPlayer %d has sunk %d ships", player, hits);
+  printf("\nPlayer %d has missed %d shots\n", player, missed);
 }
 
 int main() {
   int i,player;
   int enter;
-  for (i = 0; i < 2; i++){
+  for (i = 1; i < 3; i++){
     clearScreen();
     clearBoard();
-    setSubmarines(i);
-    display();
+    setShips(i);
+    display(0);
     clearScreen();
-    if (i == 0) player = 2;
-    else player = 1;
-    setPlayerHits(player);
-    showPlayerHits(player);
-    checkHits(player);
-    if (i == 0) {
+    setPlayerHits(i);
+    showPlayerHits(i);
+    checkHits(i);
+    if (i == 1) {
       printf("\nPress enter for player 2's turn...");
       while (enter != '\r' && enter != '\n') {
         enter = getchar();
